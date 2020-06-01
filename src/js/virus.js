@@ -5,20 +5,15 @@ const virus = new Image();
 virus.src = VirusImg;
 export class Virus {
 
-    constructor(xPos, yPos, vx, vy, color) {
+    constructor(xPos, yPos, vx, vy) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.vx = vx;
         this.vy = vy;
-        this.color = color;
     }
 
     drawVirus(ctx) {
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
         ctx.drawImage(virus, this.xPos, this.yPos, virusDimension, virusDimension);
-        ctx.closePath();
-        ctx.fill();
     } 
 
     updatePosition(canvasWidth, canvasHeight) {

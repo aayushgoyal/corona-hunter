@@ -5,6 +5,9 @@ html, body {
     padding: 0;
     -webkit-tap-highlight-color: transparent;
     font-size: 16px;
+    color: #ccc;
+    background-color: #000000;
+    overflow: hidden;
 }
 
 *,
@@ -15,8 +18,19 @@ html, body {
   padding: 0;
 }
 
-#gameCanvas {
-    // width: 800px;
-    // height: 400px;
-    border: 2px solid black;
+.game-bar {
+    display: flex;
+    padding: 10px;
+    justify-content: space-around;
+}
+
+.content {
+    #gameCanvas {
+        touch-action: none;
+        user-select: none;
+        cursor: pointer;
+        margin-left: 195px;
+        margin-right: -195px;
+        background-color: #4c9df6;
+    }
 }

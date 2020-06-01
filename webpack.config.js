@@ -9,7 +9,7 @@ module.exports = {
         filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist')
     },
-    mode: 'production',
+    mode: 'development',
     devServer: {
         contentBase: './dist',
     },

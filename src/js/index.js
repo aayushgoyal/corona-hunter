@@ -1,5 +1,5 @@
 import { Virus } from './virus';
-import { getRandomColors, getRandomNumber } from './utils';
+import { getRandomNumber } from './utils';
 import { levels } from './constants/levels';
 import { virusDimension } from './constants/constant';
 import '../styles/drawingBoard.scss';
@@ -7,7 +7,9 @@ import '../styles/drawingBoard.scss';
 let currentLevel = 1;
 let currentLevelConfig = levels[currentLevel];
 
-const canvas = document.querySelector('#gameCanvas');
+let totalScore = -1;
+
+const canvas = document.getElementById('gameCanvas');
 
 const ctx = canvas.getContext("2d");
 
@@ -25,6 +27,12 @@ const canvasTop = canvas.offsetTop;
 
 let activeViruses = [];
 
+window.addEventListener('DOMContentLoaded', function(){
+    initializeGame();
+    updateScore();
+    updateGameLevelDisplay();
+});
+
 
 /**
  * Initializes the game
@@ -33,6 +41,30 @@ let activeViruses = [];
 function initializeGame() {
     setup();
     addSanitizerSprayEvent();
+}
+
+function updateScore() {
+    totalScore = totalScore + 1;
+    const el = document.querySelector('.score-value');
+    el.textContent = totalScore;
+}
+
+function updateGameLevelDisplay() {
+    const el = document.querySelector('.level-value');
+    el.textContent = currentLevel;
+}
+
+/**
+ * Update the game level and initialize the game setup
+ * @method updateGameLevel
+ */
+function updateGameLevel() {
+    if(Object.keys(levels).length >=  currentLevel + 1) {
+        currentLevel = currentLevel + 1;
+        currentLevelConfig = levels[currentLevel];
+        updateGameLevelDisplay();
+        initializeGame();
+    }
 }
 
 /**
@@ -46,7 +78,7 @@ function setup() {
         const velocityY = getRandomNumber(1, currentLevelConfig.speed.maxVx);
         const velocityX = getRandomNumber(1, currentLevelConfig.speed.maxVy);
 
-        activeViruses.push(new Virus(xPos, yPos, velocityY, velocityX, getRandomColors()));
+        activeViruses.push(new Virus(xPos, yPos, velocityY, velocityX));
     }
 }
 
@@ -62,6 +94,7 @@ function addSanitizerSprayEvent() {
         activeViruses.forEach((virus, index) => {
             if(isKilledBySanitizer(X, Y, virus.xPos, virus.yPos)) {
                 activeViruses.splice(index, 1);
+                updateScore();
             }
         });
 
@@ -97,18 +130,6 @@ function clearDrawingBoard() {
     ctx.clearRect(0, 0, W, H);
 }
 
-/**
- * Update the game level and initialize the game setup
- * @method updateGameLevel
- */
-function updateGameLevel() {
-    if(Object.keys(levels).length >=  currentLevel + 1) {
-        currentLevel = currentLevel + 1;
-        currentLevelConfig = levels[currentLevel];
-        initializeGame();
-    }
-}
-
 (function drawScene() {
     clearDrawingBoard();
 
@@ -119,5 +140,3 @@ function updateGameLevel() {
 
     requestAnimationFrame(drawScene);
 })();
-
-initializeGame();
