@@ -2,11 +2,13 @@ import { Virus } from './virus';
 import { getRandomColors, getRandomNumber } from './utils';
 import { levels } from './constants/levels';
 import { virusDimension } from './constants/constant';
+import '../styles/drawingBoard.scss';
 
 let currentLevel = 1;
 let currentLevelConfig = levels[currentLevel];
 
 const canvas = document.querySelector('#gameCanvas');
+
 const ctx = canvas.getContext("2d");
 
 // Canvas Width
